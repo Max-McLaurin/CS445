@@ -5,7 +5,7 @@
 
 
 from params import par
-from model import DeepVO
+# from model import DeepVO
 import cv2
 import math
 
@@ -19,6 +19,8 @@ from torch.utils.data import Dataset
 from torch.utils.data import DataLoader
 from torch.nn.modules import loss
 from torch import functional as F
+# new
+from params import par
 
 
 ###############################################################
@@ -60,11 +62,13 @@ def rotationMatrixToEulerAngles(R) :
 ###############################################################
 
 #only fixed seq_len is used
-class KITTI_Data(Dataset):
+# rename from KITT_Data to OdomentryDataset
+class OdometryDataset(Dataset):
     def __init__(self,folder,seq_len): 
         
         #only store images address in dataloader 
-        root_train = 'KITTI/images/{}/image_03/data'.format(folder)
+        # root_train = 'KITTI/images/{}/image_03/data'.format(folder)
+        root_train = os.path.join(par.image_dir, folder)
         imgs = os.listdir(root_train)
         self.imgs = [os.path.join(root_train,img) for img in imgs]
         self.imgs.sort()
@@ -100,10 +104,18 @@ class KITTI_Data(Dataset):
         #prepare ground truth poses data
 
         #Stack the images for seqs
-        return np.stack(images,axis = 0), self.GT[index:index+par.seq_len,:]
+        # old
+        # return np.stack(images,axis = 0), self.GT[index:index+par.seq_len,:]
+        # new
+        return np.stack(images, axis=0), self.GT[index:index+self.seq_len, :]
+    
 
+    # Adjusted to fit partial data
     def __len__(self):
-        return self.GT.shape[0]-1-par.seq_len-1
+        # delete this line
+        # return self.GT.shape[0]-1-par.seq_len-1
+    # total frames, minus sequence length and a 2‑frame boundary
+        return self.GT.shape[0] - self.seq_len - 2
 
 #read groundtruth and return np.array
 def readGT(root):

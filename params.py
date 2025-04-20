@@ -4,16 +4,20 @@ class Parameters():
 	def __init__(self):
 		self.n_processors = 8
 		# Path
-		self.data_dir =  '/nfs/nas12.ethz.ch/fs1201/infk_ivc_students/cvg-students/chsiao/KITTI/'
+		# self.data_dir =  '/nfs/nas12.ethz.ch/fs1201/infk_ivc_students/cvg-students/chsiao/KITTI/'
+		self.data_dir =  'KITTI'
 		self.image_dir = self.data_dir + '/images/'
 		self.pose_dir = self.data_dir + '/pose_GT/'
 		
-		self.train_video = ['00', '01', '02', '05', '08', '09']
-		self.valid_video = ['04', '06', '07', '10']
+		# self.train_video = ['00', '01', '02', '05', '08', '09']
+		# self.valid_video = ['04', '06', '07', '10']
+		self.train_video = ['00']
+		self.valid_video = ['01']
+
 		self.partition = None  # partition videos in 'train_video' to train / valid dataset  #0.8
 		
 
-		# Data Preprocessing
+		# Data Preprocessingt
 		self.resize_mode = 'rescale'  # choice: 'crop' 'rescale' None
 		self.img_w = 608   # original size is about 1226
 		self.img_h = 184   # original size is about 370

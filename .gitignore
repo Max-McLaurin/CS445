@@ -1,9 +1,13 @@
-KITTI/images/
-KITTI/devkit/
-KITTI/pose_GT/
-*.png
-records/
-result/
+
+.venv/
+mpg_env/
+env/
+# Bytecode
+__pycache__/
+*.py[cod]
+# Data folders (if you don't want to commit big KITTI images)
+KITTI/
+# Logs, checkpoints
+runs/
 models/
-pretrained/
-*.ipynb
+records/
